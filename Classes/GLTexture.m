@@ -101,9 +101,9 @@ static inline int GetGLColor(NGTextureFormat format)
 	{
 	case NGTextureFormat_RGBA5551:
 	case NGTextureFormat_RGBA8888:
+  case NGTextureFormat_RGB888: 
 		return GL_RGBA;
 	case NGTextureFormat_RGB565:
-	case NGTextureFormat_RGB888:
 		return GL_RGB;
 	case NGTextureFormat_A8:
 		return GL_ALPHA;

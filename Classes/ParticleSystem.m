@@ -146,20 +146,25 @@ void _HSVToRGB(const float *HSV, unsigned char *RGB)
 - (void)_emitParticleAtTime:(double)time x:(float)x y:(float)y push:(BOOL)push
 {
     Particle *particle = _particleAlloc();
+  
+    particle->next = NULL;
+    particle->prev = NULL;
     
     if (!_firstParticle) {
-        // First particle
-        _firstParticle = particle;
+      // First particle
+      _firstParticle = particle;
     } else if (!_lastParticle) {
-        // Second particle (special case because it's also the last)
-        _lastParticle = particle;
-        _lastParticle->prev = _firstParticle;
-        _firstParticle->next = _lastParticle;
+      // Second particle (special case because it's also the last)
+      _lastParticle = particle;
+      _lastParticle->prev = _firstParticle;
+      _firstParticle->next = _lastParticle;
+    } else if (particle == _firstParticle) {
+      _lastParticle = NULL;
     } else {
-        // Last particle
-        _lastParticle->next = particle;
-        particle->prev = _lastParticle;
-        _lastParticle = particle;
+      // Last particle
+      _lastParticle->next = particle;
+      particle->prev = _lastParticle;
+      _lastParticle = particle;
     }
     
     particle->x = x;
